@@ -1,0 +1,69 @@
+﻿@page "/member/list"
+@inject HttpClient http
+
+<h3>MemberList</h3>
+<div class="py-3 m-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">Member Information</h3>
+            @if (members == null)
+            {
+                <em>Loading.....</em>
+            }
+            else
+            {
+
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th>CardNumber</th>
+                    <th>Name</th>
+                    <th>BloodGroup</th>
+                    <th>RoomNumber</th>
+                    <th>Block</th>
+                    <th>Session</th>
+                    <th>Year</th>
+                    <th>Department</th>
+                    <th>PhoneNumber</th>
+                    <th>Picture</th>
+                    <th>Action</th>
+                </tr>
+                <tbody>
+                    @foreach (var m in members)
+                    {<tr>
+                    <td > @m.Id </td>
+                    <td>@m.Name</td>
+                    <td>@m.BloodGroup</td>
+                    <td>@m.RoomNumber</td>
+                    <td>@m.Block</td>
+                    <td>@m.Session</td>
+                    <td>@m.Year</td>
+                    <td>@m.Department</td>
+                    <td>@m.PhoneNumber</td>
+                    <td><img src="@m.Picture" width="80" height="80"></td>
+                    <td>
+                        <button class="btn btn-warning" >Edit</button>  &nbsp;&nbsp;
+                        <button class="btn btn-danger" >Delete</button>
+                    </td>
+                    </tr>
+                    }
+
+
+                    </tbody>
+                </table>
+            }
+            <button class="btn btn-primary" routerLink="create">Add New Member</button>
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+    List<Member> members { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        members= await  http.GetFromJsonAsync<List<Member>>("http://localhost:5000/api/home");
+        await base.OnInitializedAsync();
+    }
+
+}

@@ -1,0 +1,67 @@
+﻿@page "/member/create"
+@inject IJSRuntime js
+
+
+<h3>CreateMember</h3>
+<EditForm Model="member" OnValidSubmit="AddMember">
+    <DataAnnotationsValidator/>
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label class="form-label">Card Number</label>
+        <InputNumber @bind-Value="member.Id" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="form-label">Name</label>
+        <InputText @bind-Value="member.Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="form-label">Blood Group</label>
+        <InputText @bind-Value="member.BloodGroup" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="form-label">Room Number</label>
+        <InputText @bind-Value="member.RoomNumber" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="form-label">Block</label>
+        <InputText @bind-Value="member.Block" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="form-label">Session</label>
+        <InputText @bind-Value="member.Session" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="form-label">Year</label>
+        <InputText @bind-Value="member.Year" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="form-label">Department</label>
+        <InputText @bind-Value="member.Department" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <InputText @bind-Value="member.PhoneNumber" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="form-label">Images</label>
+        <InputText @bind-Value="member.Picture" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+
+    <button type="reset" class="btn btn-info btn-large ">Reset</button>
+    <button type="button" class="btn btn-secondary">Go to member list...</button>
+
+
+</EditForm>
+
+
+@code {
+
+    Member member = new Member();
+    private async Task AddMember()
+    {
+        await http.PostAsJsonAsync("http://localhost:5000/api/home", member);
+        await  js.InvokeVoidAsync("alert", "Data added");
+    }
+}
